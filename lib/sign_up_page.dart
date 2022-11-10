@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -14,6 +15,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final phoneController = TextEditingController();
 
   final addressController = TextEditingController();
+  ImageSource _imageSource = ImageSource.camera;
 
   String? gender;
 
@@ -140,7 +142,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Text("Female"),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
