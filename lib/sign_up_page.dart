@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -143,6 +145,38 @@ class _SignUpPageState extends State<SignUpPage> {
                   ],
                 ),
               ),
+              Card(
+                  child: images == null
+                      ? Image.asset(
+                          "images/1.png",
+                          height: 200,
+                          width: 80,
+                          fit: BoxFit.contain,
+                        )
+                      : Image.file(
+                          File("$images"),
+                          height: 200,
+                          width: 80,
+                          fit: BoxFit.contain,
+                        )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        _imageSource = ImageSource.camera;
+                        _getImage();
+                      },
+                      child: Text("Camera")),
+                  ElevatedButton(
+                      onPressed: () {
+                        _imageSource = ImageSource.gallery;
+                        _getImage();
+                      },
+                      child: Text("Gellary")),
+                ],
+              ),
+              ElevatedButton(onPressed: () {}, child: Text("Save all")),
             ],
           ),
         ),
@@ -159,6 +193,15 @@ class _SignUpPageState extends State<SignUpPage> {
     if (selectedDate != null) {
       setState(() {
         dob = DateFormat("dd/MM/yyyy").format(selectedDate);
+      });
+    }
+  }
+
+  void _getImage() async {
+    final selectedImage = await ImagePicker().pickImage(source: _imageSource);
+    if (selectedImage != null) {
+      setState(() {
+        images = selectedImage.path;
       });
     }
   }
